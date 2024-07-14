@@ -22,6 +22,7 @@ public class Tema {
     private String titulo;
     private String descripcion;
     @ManyToOne(fetch = FetchType.LAZY)
+    // indica el campo que contiene la llave foránea
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
     @Column(name = "fecha_creacion")
@@ -33,4 +34,26 @@ public class Tema {
     // un tema puede tener múltiples respuestas
     @OneToMany(mappedBy = "tema", cascade = CascadeType.ALL)
     private List<Respuesta> respuestas;
+
+    // constructor
+    public Tema(DatosCrearTema datosCrearTema, Usuario usuario) {
+        this.titulo = datosCrearTema.titulo();
+        this.descripcion = datosCrearTema.descripcion();
+        this.usuario = usuario;
+        this.fechaCreacion = LocalDateTime.now();
+        this.fechaActualizacion = LocalDateTime.now();
+    }
+
+    // métodos
+    public void actualizar(DatosActualizarTema datosActualizarTema){
+        if (datosActualizarTema.titulo() != null){
+            this.titulo = datosActualizarTema.titulo();
+        }
+        if (datosActualizarTema.descripcion() != null){
+            this.descripcion = datosActualizarTema.descripcion();
+        }
+        if ((datosActualizarTema.titulo() != null) || (datosActualizarTema.descripcion() != null) ) {
+            this.fechaActualizacion = LocalDateTime.now();
+        }
+    }
 }
