@@ -23,7 +23,7 @@ public class TemaController {
     public ResponseEntity<DatosListarTema> crearTema(@RequestBody @Valid DatosCrearTema datosCrearTema,
                                             UriComponentsBuilder uriComponentsBuilder){
         DatosListarTema datosTema = temaService.crearTema(datosCrearTema);
-        // debe retornar un código 201 junto con una URL de acceso al nuevo registro
+        // debe retornar un código 201 junto con una URL de acceso al registro y el objeto creado
         URI url = uriComponentsBuilder.path("/temas/{id}").buildAndExpand(datosTema.id()).toUri();
         return ResponseEntity.created(url).body(datosTema);
     }
