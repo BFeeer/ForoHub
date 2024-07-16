@@ -36,4 +36,27 @@ public class Usuario {
     // un usuario puede tener múltiples respuestas
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Respuesta> respuestas;
+
+
+    // constructor
+    public Usuario(DatosRegistrarUsuario datosRegistrarUsuario) {
+        this.nombreUsuario = datosRegistrarUsuario.nombreUsuario();
+        this.contrasenia = datosRegistrarUsuario.contrasenia();
+        this.correoElectronico = datosRegistrarUsuario.correoElectronico();
+        this.fechaCreacion = LocalDateTime.now();
+        this.fechaActualizacion = LocalDateTime.now();
+    }
+
+    // métodos
+    public void actualizar(DatosActualizarUsuario datosActualizarUsuario) {
+        if (datosActualizarUsuario.nombreUsuario() != null){
+            this.nombreUsuario = datosActualizarUsuario.nombreUsuario();
+        }
+        if (datosActualizarUsuario.contrasenia() != null){
+            this.contrasenia = datosActualizarUsuario.contrasenia();
+        }
+        if ((datosActualizarUsuario.nombreUsuario() != null)||(datosActualizarUsuario.contrasenia() != null)) {
+            this.fechaActualizacion = LocalDateTime.now();
+        }
+    }
 }
