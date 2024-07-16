@@ -1,6 +1,7 @@
 package ForoHub.api.model.tema;
 
 import ForoHub.api.model.usuario.DatosListarUsuario;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,9 @@ public record DatosListarTema(
 
         DatosListarUsuario usuario,
 
+        @JsonProperty("fecha_creacion")
         LocalDateTime fechaCreacion,
+        @JsonProperty("fecha_actualizacion")
         LocalDateTime fechaActualizacion
 ) {
 
