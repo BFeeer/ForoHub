@@ -2,12 +2,13 @@
 
 ![Badge en Desarollo](https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green)
 
-Es una API Rest desarrollada con Spring Boot. Permite la creación, lectura, actualización y eliminación
+Es una API Rest desarrollada con Spring Boot. Permite la gestión de usuarios además de la creación, lectura, actualización y eliminación
 de temas (tópicos) por usuarios autenticados.
 
 ## Características
 
-- Autenticación de usuarios
+- Autenticación
+- Gestión de usuarios
 - Gestión de temas
 - Persistencia en base de datos relacional
 
@@ -25,7 +26,6 @@ de temas (tópicos) por usuarios autenticados.
 - [MySQL Connector](https://mvnrepository.com/artifact/com.mysql/mysql-connector-j)
 - [Flyway Migration](https://mvnrepository.com/artifact/org.flywaydb/flyway-core)
 - [Lombok](https://mvnrepository.com/artifact/org.projectlombok/lombok)
-- [DevTools (opcional)](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools)
 
 ## Instalación
 
@@ -33,9 +33,8 @@ de temas (tópicos) por usuarios autenticados.
 
     ```sh
     git clone https://github.com/BFeeer/ForoHub.git
-    cd ForoHub
     ```
-   
+
 ## Configuración   
 
 1. Ejecuta la sentencia dentro del gestor de bases de datos
@@ -54,4 +53,4 @@ de temas (tópicos) por usuarios autenticados.
 
 1. Abre el proyecto en un entorno de desarrollo integrado (IDE)
 2. Ejecuta la aplicación
-3. Accede a la [documentacion - Swagger UI]() para explorar y testear los endpoints 
+3. Accede a la [documentacion - Swagger UI](http://localhost:8080/swagger-ui.html) para explorar y testear los endpoints 
