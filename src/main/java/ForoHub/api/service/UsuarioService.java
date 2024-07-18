@@ -7,18 +7,29 @@ import ForoHub.api.model.usuario.Usuario;
 import ForoHub.api.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class UsuarioService {
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public DatosListarUsuario registrarUsuario(DatosRegistrarUsuario datosRegistrarUsuario){
         // Crear una instancia de usuario
-        Usuario usuario = new Usuario(datosRegistrarUsuario);
+        Usuario usuario = Usuario.builder()
+                .nombreUsuario(datosRegistrarUsuario.nombreUsuario())
+                .contrasenia(passwordEncoder.encode(datosRegistrarUsuario.contrasenia()))
+                .correoElectronico(datosRegistrarUsuario.correoElectronico())
+                .fechaCreacion(LocalDateTime.now())
+                .fechaActualizacion(LocalDateTime.now())
+                .build();
         // Guardar el usuario en la base de datos
         usuarioRepository.save(usuario);
         // Retornar un DTO con la información del usuario creado
@@ -46,7 +57,15 @@ public class UsuarioService {
             // recuperar el usuario
             Usuario usuario = usuarioRepository.getReferenceById(id);
             // actualizar los datos del usuario
-            usuario.actualizar(datosActualizarUsuario);
+            if (datosActualizarUsuario.nombreUsuario() != null){
+                usuario.setNombreUsuario(datosActualizarUsuario.nombreUsuario());
+            }
+            if (datosActualizarUsuario.contrasenia() != null){
+                usuario.setContrasenia(passwordEncoder.encode(datosActualizarUsuario.contrasenia()));
+            }
+            if ((datosActualizarUsuario.nombreUsuario() != null)||(datosActualizarUsuario.contrasenia() != null)) {
+                usuario.setFechaActualizacion(LocalDateTime.now());
+            }
             // guardar el usuario en la base de datos
             usuarioRepository.save(usuario);
             // retornar un DTO
