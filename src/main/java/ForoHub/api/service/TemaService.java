@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,11 +24,17 @@ public class TemaService {
     public DatosListarTema crearTema(DatosCrearTema datosCrearTema){
         // Recuperar los datos del usuario que crea el tema
         Usuario usuario = usuarioRepository.getReferenceById(datosCrearTema.idUsuario());
-        // Crear un tema con los datos del usuario
-        Tema tema = new Tema(datosCrearTema, usuario);
-        // Almacenarlo en la base de datos
+        // Crear una instancia de tema
+        Tema tema = Tema.builder()
+                .titulo(datosCrearTema.titulo())
+                .descripcion(datosCrearTema.descripcion())
+                .usuario(usuario)
+                .fechaCreacion(LocalDateTime.now())
+                .fechaActualizacion(LocalDateTime.now())
+                .build();
+        // Guardar el tema en la base de datos
         temaRepository.save(tema);
-        // retornar un DTO
+        // Retornar un DTO con la información del tema creado
         return new DatosListarTema(tema);
     }
 
@@ -51,8 +58,16 @@ public class TemaService {
         if (temaRepository.existsById(id)){
             // recuperar el tema
             Tema tema = temaRepository.getReferenceById(id);
-            // actualizar el tema con los datos nuevos
-            tema.actualizar(datosActualizarTema);
+            // actualizar los datos del tema
+            if (datosActualizarTema.titulo() != null){
+                tema.setTitulo(datosActualizarTema.titulo());
+            }
+            if (datosActualizarTema.descripcion() != null){
+                tema.setDescripcion(datosActualizarTema.descripcion());
+            }
+            if ((datosActualizarTema.titulo() != null) || (datosActualizarTema.descripcion() != null) ) {
+                tema.setFechaActualizacion(LocalDateTime.now());
+            }
             // guardar el tema en la base de datos
             temaRepository.save(tema);
             // retornar un DTO
