@@ -7,7 +7,7 @@ de temas (tópicos) por usuarios autenticados.
 
 ## Características
 
-- Autenticación
+- Autenticación básica
 - Gestión de usuarios
 - Gestión de temas
 - Persistencia en base de datos relacional
@@ -26,6 +26,7 @@ de temas (tópicos) por usuarios autenticados.
 - [MySQL Connector](https://mvnrepository.com/artifact/com.mysql/mysql-connector-j)
 - [Flyway Migration](https://mvnrepository.com/artifact/org.flywaydb/flyway-core)
 - [Lombok](https://mvnrepository.com/artifact/org.projectlombok/lombok)
+- [Swagger UI](https://springdoc.org/#getting-started)
 
 ## Instalación
 
@@ -43,10 +44,10 @@ de temas (tópicos) por usuarios autenticados.
     ```
 3. Crea variables de entorno para configurar las credenciales de acceso a la base de datos
    ```sh
-   DB_HOST = "localhost"
-   DB_NAME = "forohub"
-   DB_USER = "tu_usuario"
-   DB_PASSWORD = "tu_contraseña"
+   DB_HOST = localhost
+   DB_NAME = forohub
+   DB_USER = tu_usuario
+   DB_PASSWORD = tu_contraseña
     ```   
 
 ## Uso
