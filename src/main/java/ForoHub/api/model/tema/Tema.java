@@ -3,16 +3,15 @@ package ForoHub.api.model.tema;
 import ForoHub.api.model.respuesta.Respuesta;
 import ForoHub.api.model.usuario.Usuario;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Data
+@Builder
 @Entity
 @Table(name = "temas")
 public class Tema {
@@ -34,26 +33,4 @@ public class Tema {
     // un tema puede tener múltiples respuestas
     @OneToMany(mappedBy = "tema", cascade = CascadeType.ALL)
     private List<Respuesta> respuestas;
-
-    // constructor
-    public Tema(DatosCrearTema datosCrearTema, Usuario usuario) {
-        this.titulo = datosCrearTema.titulo();
-        this.descripcion = datosCrearTema.descripcion();
-        this.usuario = usuario;
-        this.fechaCreacion = LocalDateTime.now();
-        this.fechaActualizacion = LocalDateTime.now();
-    }
-
-    // métodos
-    public void actualizar(DatosActualizarTema datosActualizarTema){
-        if (datosActualizarTema.titulo() != null){
-            this.titulo = datosActualizarTema.titulo();
-        }
-        if (datosActualizarTema.descripcion() != null){
-            this.descripcion = datosActualizarTema.descripcion();
-        }
-        if ((datosActualizarTema.titulo() != null) || (datosActualizarTema.descripcion() != null) ) {
-            this.fechaActualizacion = LocalDateTime.now();
-        }
-    }
 }
