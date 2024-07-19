@@ -4,6 +4,7 @@ import ForoHub.api.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,7 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
     @Autowired
-    CustomUserDetailsService customUserDetailsService;
+    private CustomUserDetailsService customUserDetailsService;
 
     @Bean // configuración de la cadena de filtros de seguridad
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
@@ -27,6 +28,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable) // protección contra cross-site request forgery (desactivado)
                 .authorizeHttpRequests(auth ->{ // configuración de acceso a urls
                     auth.requestMatchers("/autenticacion").permitAll();
+                    auth.requestMatchers(HttpMethod.POST,"/usuarios").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session ->  // configurar el comportamiento de la sesión

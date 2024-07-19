@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
+@Service // definición de un contenedor de la información de autenticación del usuario
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -22,11 +22,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (posibleUsuario.isPresent()){
             // recuperar el usuario
             Usuario usuario = posibleUsuario.get();
-            // retornar un objeto user
+            // retornar un objeto UserDetails
             return User.builder()
-                    .username(username)
+                    .username(usuario.getNombreUsuario())
                     .password(usuario.getContrasenia())
-                    .roles("ROLE_USER")
+                    .roles("USER")
                     .build();
         }else{
             throw new UsernameNotFoundException(username);
