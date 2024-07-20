@@ -25,6 +25,7 @@ public class SecurityConfiguration{
                 .authorizeHttpRequests(auth ->{ // configuración de acceso a urls
                     auth.requestMatchers("/autenticacion").permitAll();
                     auth.requestMatchers(HttpMethod.POST,"/usuarios").permitAll();
+                    auth.requestMatchers("/swagger-ui.html","/v3/api-docs/**","/swagger-ui/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session ->  // configurar el comportamiento de la sesión
